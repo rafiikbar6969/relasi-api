@@ -12,11 +12,13 @@ class CustomerController extends Controller
     public function index()
 {
     // $data = Customer::all();
+    // return response()->json($data, 200);
     // ni kalo banyak
-    // $data = Customer::with('order')->get();
-    // kalo datanya satu
-    $data = Customer::with('order')->where('id', $data)->first();
+    $data = Customer::with('order')->get();
     return response()->json($data, 200);
+    // kalo datanya satu
+    // $data = Customer::with('order')->where('id', $data)->first();
+    // return response()->json($data, 200);
 }
 
 public function show($id){
@@ -27,6 +29,7 @@ public function show($id){
             'data' => $data
         ], 404);
     }
+    $data = Customer::with('order')->where('id', $data)->first();
     return response()->json([
         'pesan' => 'data tersedia',
         'data' => $data
@@ -40,7 +43,8 @@ public function add(Request $request){
     'name' => 'required',
     'phone' => 'required',
     'email' => 'required',
-    'address' => 'required|min:5'
+    'address' => 'required|min:5',
+    'customer_id' => 'required'
     ]);
 
     if($validate->fails()){
@@ -89,7 +93,8 @@ public function update(Request $request, $id){
         'name' => 'required',
         'phone' => 'required',
         'email' => 'required',
-        'address' => 'required|min:5'
+        'address' => 'required|min:5',
+        'customer_id' => 'required'
     ]);
 
 
