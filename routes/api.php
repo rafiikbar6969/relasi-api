@@ -27,3 +27,10 @@ route::get('v1/customer/{id}', [CustomerController::class, 'show']);
 route::patch('v1/customer/{id}', [CustomerController::class, 'update']);
 
 route::delete('v1/customer/{id}', [CustomerController::class, 'destroy']);
+
+Route::group(['middleware'=> 'api', 'prefix' => 'auth'], function ($router){
+Route::post('login', [\App\Http\Controllers\API\AuthController::class, 'login']);
+Route::post('logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
+Route::post('refresh', [\App\Http\Controllers\API\AuthController::class, 'refresh']);
+Route::post('me', [\App\Http\Controllers\API\AuthController::class, 'me']);
+});
